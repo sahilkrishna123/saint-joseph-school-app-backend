@@ -1,0 +1,126 @@
+import express from "express";
+import dotenv from "dotenv";
+
+import path from "path";
+import { fileURLToPath } from "url";
+
+// // Routers
+import studentRouter from "./routes/studentRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+import classRouter from "./routes/classRoutes.js";
+
+// // Error Handling Imports
+// import AppError from "./utils/appError.js";
+import globalErrorHandler from "./controllers/errorController.js";
+
+import cors from "cors";
+
+// // Security Dependencies
+// import compression from "compression";
+// import helmet from "helmet";
+// import mongoSanitize from "express-mongo-sanitize";
+// import xss from "xss-clean";
+// import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
+// import hpp from "hpp";
+
+const app = express();
+
+
+
+// Load environment variables
+dotenv.config({ path: "./.env" });
+
+// 1) GLOBAL MIDDLEWARES
+
+// CORS configuration for production and local development
+
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://saint-joseph-school-app-frontend.vercel.app"
+    ],
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin"], // Expanded headers
+  })
+);
+// // Serving Static files
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// app.use(express.static(`${__dirname}/public`));
+
+// // Setting Templating Engine
+// app.set("view engine", "pug");
+// app.set("views", path.join(__dirname, "views"));
+
+
+
+// // Set Security HTTP Headers
+// app.use(helmet());
+
+// // Limit requests from same API
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000 * 1000, // 100 requests per hour * 1000 // Updated
+//   message: "Too many requests from this IP, please try again in an hour!",
+// });
+// app.use("/api", limiter);
+
+// Body parser, reading data from body into req.body
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+app.use(cookieParser());
+
+// Default route to check the server
+app.get("/", (req, res) => {
+  res.status(200).send("Welcome to the Saint Joseph School Backend!");
+});
+
+// // Data sanitization against NoSQL query injection
+// app.use(mongoSanitize());
+
+// // Data sanitization against XSS
+// app.use(xss());
+
+// // Prevent parameter pollution
+// app.use(
+//   hpp({
+//     whitelist: [
+//       "duration",
+//       "ratingsQuantity",
+//       "ratingsAverage",
+//       "maxGroupSize",
+//       "difficulty",
+//       "price",
+//     ],
+//   })
+// );
+
+// // Compression middleware to optimize response size
+// app.use(compression());
+
+// // Routes
+app.use("/api/v1/students", studentRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/classes", classRouter);
+
+
+// Error Handling
+// app.all("/*", (req, res, next) => {
+//   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
+// });
+app.use((req, res, next) => {
+  res.status(404).json({
+    status: "fail",
+    message: `Can't find ${req.originalUrl} on this server`,
+  });
+});
+
+// Global Error Handler
+app.use(globalErrorHandler);
+
+export default app;
+
