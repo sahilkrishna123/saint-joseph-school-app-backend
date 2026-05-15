@@ -40,7 +40,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://saint-joseph-school-app-frontend.vercel.app"
+      "https://saint-joseph-school-app-frontend.vercel.app",
+      "https://official.saint-joseph.workers.dev"
     ],
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
