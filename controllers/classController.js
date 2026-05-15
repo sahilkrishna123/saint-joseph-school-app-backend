@@ -62,7 +62,7 @@ export const updateClass = catchAsync(async (req, res, next) => {
     id,
     req.body,
     {
-      new: true,
+      returnDocument: 'after',
       runValidators: true,
     }
   );
