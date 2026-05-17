@@ -185,17 +185,10 @@ export const getOneStudent = catchAsync(async (req, res, next) => {
 export const getAllStudents = catchAsync(async (req, res, next) => {
   const students = await Student.find().populate("classId");
 
-  const formattedStudents = students.map((student) => ({
-    ...student._doc,
-    dateOfBirth: student.dateOfBirth
-      ? student.dateOfBirth.toISOString().split("T")[0]
-      : null,
-  }));
-
   res.status(200).json({
     status: "success",
     data: {
-      data: formattedStudents,
+      data: students,
     },
   });
 });
