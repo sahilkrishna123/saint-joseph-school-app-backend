@@ -77,6 +77,10 @@ const studentSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    leavingCertificateTwoIssued: {
+        type: Boolean,
+        default: false,
+    },
     provisionalCertificateIssued: {
         type: Boolean,
         default: false,
