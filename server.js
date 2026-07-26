@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import app from "./app.js";
 
+import dns from "dns";
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 // Env variables
 dotenv.config({ path: "./.env" });
 
