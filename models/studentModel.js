@@ -105,6 +105,9 @@ const studentSchema = new mongoose.Schema({
     cellNumber: {
         type: String,
     },
+    grade:{
+        type:String,
+    },
     class: {
         type: String,
         required: true,
