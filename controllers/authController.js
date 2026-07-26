@@ -45,12 +45,12 @@ export const signup = catchAsync(async (req, res, next) => {
         passwordConfirm: req.body.passwordConfirm,
     });
 
-    try {
-        const url = `${req.protocol}://${req.get("host")}/me`;
-        await new Email(newUser, url).sendWelcome();
-    } catch (err) {
-        console.log("Welcome email failed:", err.message);
-    }
+    // try {
+    //     const url = `${req.protocol}://${req.get("host")}/me`;
+    //     await new Email(newUser, url).sendWelcome();
+    // } catch (err) {
+    //     console.log("Welcome email failed:", err.message);
+    // }
 
     createSendToken(newUser, 201, req, res);
 });

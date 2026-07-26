@@ -73,6 +73,18 @@ const studentSchema = new mongoose.Schema({
     progessInStudies: {
         type: String,
     },
+    leavingCertificateIssued: {
+        type: Boolean,
+        default: false,
+    },
+    provisionalCertificateIssued: {
+        type: Boolean,
+        default: false,
+    },
+    characterCertificateIssued: {
+        type: Boolean,
+        default: false,
+    },
     conduct: {
         type: String,
     },
