@@ -53,6 +53,7 @@ export const signup = catchAsync(async (req, res, next) => {
     }
 
     createSendToken(newUser, 201, req, res);
+    console.log("Signup successful!!!");
 });
 
 export const login = catchAsync(async (req, res, next) => {
